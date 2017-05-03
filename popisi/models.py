@@ -61,7 +61,7 @@ class Zvrst(models.Model):
         ('E', 'Elektro instalacije'),
         ('Z', 'Zunanja ureditev'),
     )
-    zvrst = models.CharField(choices=zvrst,default='G',verbose_name='Zvrst',max_length=50)        
+    zvrst = models.CharField(choices=zvrst,default=G,verbose_name='Zvrst',max_length=50)        
     splosna_dolocila_zvrsti = models.TextField(max_length=2000,default="splošna določila zvrsti ")
  
     class Meta: 
@@ -72,38 +72,42 @@ class Zvrst(models.Model):
         return reverse('zvrst-detail', args=[str(self.id)]) 
 
 class Skupina(models.Model):
-    Z='Zemeljska dela'
-    B='Betonska dela'
-    Zi='Zidarska dela'
-    T='Tesarska dela'
-    K='Kanalizacija'
-    Kr='Krovska dela'
-    Kl='Kleparska dela'
-    Kj='Ključavničarska dela'
-    M='Mizarska dela'
-    S='Slikopleskarska dela'
-    St='Steklarska dela'
-    Ke='Keramičarska dela'
-    Tl='Tlakarska dela'
+#    Z='Zemeljska dela'
+#    B='Betonska dela'
+#    Zi='Zidarska dela'
+#    T='Tesarska dela'
+#    K='Kanalizacija'
+#    Kr='Krovska dela'
+#    Kl='Kleparska dela'
+#    Kj='Ključavničarska dela'
+#    M='Mizarska dela'
+#    S='Slikopleskarska dela'
+#    St='Steklarska dela'
+#    Ke='Keramičarska dela'
+#    Tl='Tlakarska dela'
     
     skupina = (
-    ('Z','Zemeljska dela'),
-    ('B','Betonska dela'),
-    ('Zi','Zidarska dela'),
-    ('T','Tesarska dela'),
-    ('K','Kanalizacija'),
-    ('Kr','Krovska dela'),
-    ('Kl','Kleparska dela'),
-    ('Kj','Ključavničarska dela'),
-    ('M','Mizarska dela'),
-    ('S','Slikopleskarska dela'),
-    ('St','Steklarska dela'),
-    ('Ke','Keramičarska dela'),
-    ('Tl','Tlakarska dela'),
+    ('ZE','Zemeljska dela'),
+    ('BT','Betonska dela'),
+    ('ZD','Zidarska dela'),
+    ('TS','Tesarska dela'),
+    ('KN','Kanalizacija'),
+    ('KR','Krovska dela'),
+    ('KL','Kleparska dela'),
+    ('KJ','Ključavničarska dela'),
+    ('AL','Aluminij dela'),
+    ('MZ','Mizarska dela'),
+    ('MK','Mavčnokartonska dela '),
+    ('SL','Slikopleskarska dela'),
+    ('ST','Steklarska dela'),
+    ('KR','Keramičarska dela'),
+    ('TL','Tlakarska dela'),
+    ('FA','Fasaderska dela'),
+
     )
-    skupina = models.CharField(choices=skupina,default=Z,verbose_name='Skupina',max_length=50)
+    skupina = models.CharField(choices=skupina,default='Zem',verbose_name='Skupina',max_length=50)
     splosna_dolocila_skupine = models.TextField(max_length=2000,default="splošna določila skupine ")
-    
+    zvrst = models.ForeignKey('Zvrst',on_delete=models.CASCADE)    
     class Meta: 
         ordering = ["skupina"]
     def __str__(self):
@@ -116,7 +120,7 @@ class Dela(models.Model):
     opis_del=models.CharField(verbose_name='Opis del',max_length=50)
     splosna_dolocila_del = models.TextField(max_length=2000,default="splošna določila del ")
     objekt = models.ForeignKey('Objekt',on_delete=models.CASCADE)
- 
+    skupina = models.ForeignKey('Skupina',null=True, on_delete=models.CASCADE) 
     class Meta: 
         ordering = ["opis_del"]
     def __str__(self):
@@ -124,4 +128,42 @@ class Dela(models.Model):
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
 
+class DelPostavke(models.Model):
+ 
+    koda_dela_postavke = models.CharField(max_length=50)
+    opis_dela_postavke = models.CharField(max_length=100)
+    splosna_dolocila_dela_postavke = models.TextField(max_length=1000,help_text="",null=True)
+    class Meta: 
+        ordering = ["opis_dela_postavke"]
+    def __str__(self):
+        return self.opis_dela_postavke
+    def get_absolute_url(self):
+        return reverse('del_postavke-detail', args=[str(self.id)]) 
         
+class Postavka(models.Model):
+    
+    koda_postavke = models.CharField(max_length=100)
+    opis_postavke = models.CharField(max_length=100, help_text="")
+    enota_mere = models.CharField(max_length=10)
+    dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
+    splosna_dolocila_postavke = models.TextField(max_length=1000, default="miha")
+    del_postavke = models.ManyToManyField(DelPostavke)  
+    
+    class Meta: 
+        ordering = ["opis_postavke"]
+    def __str__(self):
+        return '%s, %s' % (self.opis_postavke, self.enota_mere)
+    def get_absolute_url(self):
+        return reverse('postavka-detail', args=[str(self.id)])    
+
+class Popis(models.Model):
+    
+    stevilka_postavke = models.AutoField(primary_key=True)
+    postavka = models.ForeignKey('Postavka', on_delete=models.SET_NULL, null=True)
+        
+    class Meta: 
+        ordering = ["stevilka_postavke"]
+#    def __str__(self):
+#        return self.postavka
+    def get_absolute_url(self):
+        return reverse('popis-detail', args=[str(self.id)])    
