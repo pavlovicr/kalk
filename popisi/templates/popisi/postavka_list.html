@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Postavke seznam</h1>
+
+    {% if postavka_list %}
+    <ul>
+
+      {% for postavka in postavka_list %}
+      <li>
+        <a href="{{ postavka.get_absolute_url }}">{{ postavka.opis_postavke }}</a> ({{postavka.dela}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>Na žalost , ni postavke.</p>
+    {% endif %}       
+{% endblock %}

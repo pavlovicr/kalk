@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Popisi</h1>
+
+  <p>Dobrodošli v  <em>knjižnico popisov</em>, ki vam bo mogoče v pomoč.</p>
+
+<h2>Dynamic vsebina</h2>
+
+  <p>Podatki o številu:</p>
+  <ul>
+    <li><strong>Postavke:</strong> {{ stej_postavke }}</li>
+    <li><strong>Deli Postavke:</strong> {{ stej_del_postavke }}</li>
+  </ul>
+
+{% endblock %}

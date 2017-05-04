@@ -128,6 +128,23 @@ class Dela(models.Model):
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
 
+  
+class Postavka(models.Model):
+    
+    koda_postavke = models.CharField(max_length=100)
+    opis_postavke = models.CharField(max_length=100, help_text="")
+    enota_mere = models.CharField(max_length=10)
+    dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
+    splosna_dolocila_postavke = models.TextField(max_length=1000, default="miha")
+     
+    
+    class Meta: 
+        ordering = ["opis_postavke"]
+    def __str__(self):
+        return '%s, %s' % (self.opis_postavke, self.enota_mere)
+    def get_absolute_url(self):
+        return reverse('postavka-detail', args=[str(self.id)])    
+
 class DelPostavke(models.Model):
  
     koda_dela_postavke = models.CharField(max_length=50)
@@ -139,31 +156,17 @@ class DelPostavke(models.Model):
         return self.opis_dela_postavke
     def get_absolute_url(self):
         return reverse('del_postavke-detail', args=[str(self.id)]) 
-        
-class Postavka(models.Model):
-    
-    koda_postavke = models.CharField(max_length=100)
-    opis_postavke = models.CharField(max_length=100, help_text="")
-    enota_mere = models.CharField(max_length=10)
-    dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
-    splosna_dolocila_postavke = models.TextField(max_length=1000, default="miha")
-    del_postavke = models.ManyToManyField(DelPostavke)  
-    
-    class Meta: 
-        ordering = ["opis_postavke"]
-    def __str__(self):
-        return '%s, %s' % (self.opis_postavke, self.enota_mere)
-    def get_absolute_url(self):
-        return reverse('postavka-detail', args=[str(self.id)])    
-
+      
 class Popis(models.Model):
     
     stevilka_postavke = models.AutoField(primary_key=True)
+    zaporedna_stevilka = models.IntegerField(null=True)
     postavka = models.ForeignKey('Postavka', on_delete=models.SET_NULL, null=True)
-        
+    del_postavke = models.ManyToManyField(DelPostavke)     
     class Meta: 
-        ordering = ["stevilka_postavke"]
-#    def __str__(self):
-#        return self.postavka
+        ordering = ["zaporedna_stevilka"]
+    def __str__(self):
+#        return self.zaporedna_stevilka
+        return '%s, %s, %s' % (self.zaporedna_stevilka, self.postavka, self.del_postavke,)
     def get_absolute_url(self):
         return reverse('popis-detail', args=[str(self.id)])    
