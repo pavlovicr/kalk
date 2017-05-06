@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Popisi seznam</h1>
+
+    {% if popis_list %}
+    <ul>
+
+      {% for popis in popis_list %}
+      <li>
+        <a href="{{ popis.get_absolute_url }}">{{ popis.postavka }}</a> ({% for del_postavke in popis.del_postavke.all %} , {{del_postavke.koda_dela_postavke}} {{del_postavke.opis_dela_postavke}}  {% endfor %})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>Na žalost , nii popisa.</p>
+    {% endif %}       
+{% endblock %}

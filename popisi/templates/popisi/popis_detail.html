@@ -1,19 +1,19 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Postavka: {{ postavka.opis_postavke }}</h1>
+  <h1>Popis: {{ popis.zaporedna_stevilka }}</h1>
 
-  <p><strong>Koda:</strong> <a href="">{{ postavka.koda_postavke }}</a></p> <!-- author detail link not yet defined -->
-  <p><strong>Opis:</strong> {{ postavka.opis_postavke }}</p>
+  <p><strong>Koda:</strong> <a href="">{{ popis.zaporedna_stevilka }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Opis:</strong> {{ popis.zaporedna_stevilka }}</p>
   
-  <p><strong>Specifikacija postavke:</strong> {% for specifikacija in postavka.specifikacija.all %} {{specifikacija}} {% endfor %}</p>
-  <p><strong>enota mere:</strong> {{ postavka.enota_mere }}</p> 
+  <p><strong>Specifikacija popisne postavke:</strong> {% for del_postavke in popis.del_postavke.all %} {{del_postavke}} {% endfor %}</p>
+  <!--<p><strong>enota mere:</strong> {{ popis.enota_mere }}</p> 
   
   <p><strong>dela:</strong> {{ postavka.dela }}</p>  
   <p><strong>splošna določila postavke
   :</strong> {{ postavka.splosna_dolocila_postavke }}</p>
 
-  <!--<p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Copies</h4>

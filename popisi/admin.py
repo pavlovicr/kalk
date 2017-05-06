@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Projekt, Objekt,Dela,Skupina,Zvrst,DelPostavke,Postavka,Popis
+from .models import Projekt, Objekt,Dela,Skupina,Zvrst,DelPostavke,Postavka,Popis,SpecifikacijaPostavke
 
 admin.site.register(Projekt)
 admin.site.register(Objekt)
@@ -9,7 +9,7 @@ admin.site.register(Dela)
 admin.site.register(DelPostavke)
 admin.site.register(Postavka)
 admin.site.register(Popis)
-
+admin.site.register(SpecifikacijaPostavke)
 
 
 # Register your models here.

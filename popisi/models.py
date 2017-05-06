@@ -129,10 +129,23 @@ class Dela(models.Model):
         return reverse('dela-detail', args=[str(self.id)]) 
 
   
+class SpecifikacijaPostavke(models.Model):
+ 
+    vsebina_specifikacije = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.vsebina_specifikacije
+    def get_absolute_url(self):
+        return reverse('specifikacija_postavke-detail', args=[str(self.id)]) 
+
+
+
+
 class Postavka(models.Model):
     
     koda_postavke = models.CharField(max_length=100)
     opis_postavke = models.CharField(max_length=100, help_text="")
+    specifikacija = models.ManyToManyField(SpecifikacijaPostavke)
     enota_mere = models.CharField(max_length=10)
     dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
     splosna_dolocila_postavke = models.TextField(max_length=1000, default="miha")
@@ -150,6 +163,7 @@ class DelPostavke(models.Model):
     koda_dela_postavke = models.CharField(max_length=50)
     opis_dela_postavke = models.CharField(max_length=100)
     splosna_dolocila_dela_postavke = models.TextField(max_length=1000,help_text="",null=True)
+    postavka = models.ManyToManyField(Postavka) 
     class Meta: 
         ordering = ["opis_dela_postavke"]
     def __str__(self):
@@ -159,7 +173,7 @@ class DelPostavke(models.Model):
       
 class Popis(models.Model):
     
-    stevilka_postavke = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     zaporedna_stevilka = models.IntegerField(null=True)
     postavka = models.ForeignKey('Postavka', on_delete=models.SET_NULL, null=True)
     del_postavke = models.ManyToManyField(DelPostavke)     
