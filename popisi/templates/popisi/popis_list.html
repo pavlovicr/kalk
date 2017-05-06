@@ -6,10 +6,10 @@
     {% if popis_list %}
     <ul>
 
-      {% for popis in popis_list %}
+      {% for b in popis_list %}
       <li>
-        <a href="{{ popis.get_absolute_url }}">{{ popis.postavka }}</a> ({% for del_postavke in popis.del_postavke.all %} , {{del_postavke.koda_dela_postavke}} {{del_postavke.opis_dela_postavke}}  {% endfor %})
-      </li>
+        <a href="{{ b.get_absolute_url }}">{{ b.postavka }}</a> ({% for a in b.specifikacija_postavke.all %} , {{a.koda_specifikacije}} {{a.vsebina_specifikacije}} {% endfor %})
+
       {% endfor %}
 
     </ul>

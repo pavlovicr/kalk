@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Postavka, DelPostavke,Popis
+from .models import Postavka, Popis
 
 def index(request):
     
     stej_postavke=Postavka.objects.all().count()
-    stej_del_postavke=DelPostavke.objects.all().count()
+    stej_popisne_postavke=Popis.objects.all().count()
    
 
     return render(
         request,
         'index.html',
-        context={'stej_postavke':stej_postavke,'stej_del_postavke':stej_del_postavke},
+        context={'stej_postavke':stej_postavke,'stej_popisne_postavke':stej_popisne_postavke},
     )
 class PostavkaListView(generic.ListView):
     model = Postavka

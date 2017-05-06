@@ -1,12 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Popis: {{ popis.zaporedna_stevilka }}</h1>
+  <h1>Popis: {{ popis.postavka }}</h1>
 
   <p><strong>Koda:</strong> <a href="">{{ popis.zaporedna_stevilka }}</a></p> <!-- author detail link not yet defined -->
-  <p><strong>Opis:</strong> {{ popis.zaporedna_stevilka }}</p>
+  <p><strong>Opis:</strong> {{ popis.postavka }}</p>
   
-  <p><strong>Specifikacija popisne postavke:</strong> {% for del_postavke in popis.del_postavke.all %} {{del_postavke}} {% endfor %}</p>
+  <p><strong>Specifikacija popisne postavke:</strong> {% for specifikacija in popis.specifikacija_postavke.all %} {{specifikacija.koda_specifikacije}}, {{specifikacija.vsebina_specifikacije}}, {{specifikacija.splosna_dolocila_specifikacije}}{% endfor %}</p>
   <!--<p><strong>enota mere:</strong> {{ popis.enota_mere }}</p> 
   
   <p><strong>dela:</strong> {{ postavka.dela }}</p>  

@@ -6,9 +6,9 @@
     {% if postavka_list %}
     <ul>
 
-      {% for postavka in postavka_list %}
+      {% for a in postavka_list %}
       <li>
-        <a href="{{ postavka.get_absolute_url }}">{{ postavka.opis_postavke }}</a> ({{postavka.dela}})
+        <a href="{{ a.get_absolute_url }}">{{ a.opis_postavke }}</a> ({{a.dela}})
       </li>
       {% endfor %}
 
