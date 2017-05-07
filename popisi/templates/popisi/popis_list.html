@@ -8,7 +8,7 @@
 
       {% for b in popis_list %}
       <li>
-        <a href="{{ b.get_absolute_url }}">{{ b.postavka }}</a> ({% for a in b.specifikacija_postavke.all %} , {{a.koda_specifikacije}} {{a.vsebina_specifikacije}} {% endfor %})
+        <a href="{{ b.get_absolute_url }}">{{ b.postavka }}</a> ({% for a in b.specifikacija.all %} , {{a.koda_specifikacije}} {{a.vsebina_specifikacije}} {% endfor %})
 
       {% endfor %}
 
