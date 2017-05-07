@@ -32,7 +32,8 @@ class Zvrst(models.Model):
     class Meta: 
         ordering = ["koda_zvrsti"]
     def __str__(self):
-        return self.naziv_zvrsti
+        #return self.naziv_zvrsti
+        return '%s, %s' % (self.koda_zvrsti, self.naziv_zvrsti) 
     def get_absolute_url(self):
         return reverse('zvrst-detail', args=[str(self.id)]) 
 
@@ -41,11 +42,12 @@ class Skupina(models.Model):
     naziv_skupine = models.CharField(verbose_name='Naziv skupine',max_length=50,default='Zemeljska dela')
     splosna_dolocila_skupine = models.TextField(max_length=2000,default="splošna določila skupine ZEMELJSKA DELA ")
     zvrst = models.ForeignKey('Zvrst',on_delete=models.CASCADE)    
-    podrocje = models.ManyToManyField(Podrocje) 
+     
     class Meta: 
         ordering = ["koda_skupine"]
     def __str__(self):
         return self.naziv_skupine
+    #    return '%s, %s, %s' % (self.koda_skupine, self.naziv_skupine, self.podrocje)
     def get_absolute_url(self): 
         return reverse('skupina-detail', args=[str(self.id)]) 
 
@@ -53,8 +55,8 @@ class Dela(models.Model):
     koda_del = models.CharField(max_length=50,null=True)
     opis_del=models.CharField(verbose_name='Opis del',max_length=50)
     splosna_dolocila_del = models.TextField(max_length=2000,default="splošna določila za dela IZKOPI ")
-    objekt = models.ForeignKey('Objekt', on_delete=models.CASCADE)
     skupina = models.ForeignKey('Skupina', on_delete=models.CASCADE) 
+    podrocje = models.ManyToManyField(Podrocje, default=[1,2,3])
     class Meta: 
         ordering = ["opis_del"]
     def __str__(self):
@@ -62,7 +64,7 @@ class Dela(models.Model):
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
 
-class Postavka(models.Model):
+class Postavka(models.Model): 
     koda_postavke = models.CharField(max_length=100,null=True)
     opis_postavke = models.CharField(max_length=100)
     enota_mere = models.CharField(max_length=10)
@@ -74,7 +76,6 @@ class Postavka(models.Model):
         return '%s, %s' % (self.opis_postavke, self.enota_mere)
     def get_absolute_url(self):
         return reverse('postavka-detail', args=[str(self.id)])    
-
 
 class SpecifikacijaPostavke(models.Model):
     koda_specifikacije = models.CharField(max_length=50,null=True)    
@@ -88,13 +89,12 @@ class SpecifikacijaPostavke(models.Model):
     def get_absolute_url(self):
         return reverse('specifikacija_postavke-detail', args=[str(self.id)]) 
 
-
 class Objekt(models.Model):
     naziv_objekta = models.CharField(max_length=50,null=True)
     neto_povrsina_objekta=models.DecimalField(max_digits=20,decimal_places=2,default=('0.00'))
     bruto_povrsina_objekta=models.DecimalField(max_digits=20,decimal_places=2,default=('0.00'))
     opis_objekta = models.TextField(max_length=2000,default="opis objekta ")
-    podrocje = models.ForeignKey('Podrocje',on_delete=models.CASCADE)
+    podrocje = models.ForeignKey('Podrocje',on_delete=models.CASCADE,default=1)
     projekt = models.ForeignKey('Projekt',on_delete=models.CASCADE)
     class Meta: 
         ordering = ["naziv_objekta"]
@@ -103,11 +103,12 @@ class Objekt(models.Model):
     def get_absolute_url(self):
         return reverse('objekt-detail', args=[str(self.id)]) 
 
+x=1
 class Popis(models.Model):
     zaporedna_stevilka = models.IntegerField(null=True)
     postavka = models.ForeignKey('Postavka')
     specifikacija = models.ManyToManyField(SpecifikacijaPostavke)     
-    objekt = models.ManyToManyField(Objekt)
+    objekt = models.ForeignKey('Objekt',on_delete=models.CASCADE, default=x)
     class Meta: 
         ordering = ["zaporedna_stevilka"]
     def __str__(self):
