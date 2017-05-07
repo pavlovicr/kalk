@@ -81,11 +81,12 @@ class SpecifikacijaPostavke(models.Model):
     koda_specifikacije = models.CharField(max_length=50,null=True)    
     vsebina_specifikacije = models.CharField(max_length=100)
     splosna_dolocila_specifikacije = models.TextField(max_length=2000,default="splošna določila specifikacije")
-    postavka = models.ManyToManyField(Postavka) 
+    dela = models.ManyToManyField(Dela)
     class Meta: 
         ordering = ["koda_specifikacije"]
     def __str__(self):
         return self.vsebina_specifikacije
+    
     def get_absolute_url(self):
         return reverse('specifikacija_postavke-detail', args=[str(self.id)]) 
 
@@ -105,6 +106,7 @@ class Objekt(models.Model):
 
 x=1
 class Popis(models.Model):
+    koda_popisne_postavke = models.CharField(max_length=100,null=True)
     zaporedna_stevilka = models.IntegerField(null=True)
     postavka = models.ForeignKey('Postavka')
     specifikacija = models.ManyToManyField(SpecifikacijaPostavke)     
