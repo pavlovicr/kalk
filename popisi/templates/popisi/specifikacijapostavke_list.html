@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Specifikacije seznam</h1>
+
+    {% if specifikacijapostavke_list %}
+    <ul>
+
+      {% for a in specifikacijapostavke_list %}
+      <li>
+        <a href="{{ a.get_absolute_url }}">{{ a.vsebina_specifikacije }}</a> ({{a.dela}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>Na žalost , ni specifikacije.</p>
+    {% endif %}       
+{% endblock %}

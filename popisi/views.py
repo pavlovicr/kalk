@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Postavka, Popis
+from .models import Postavka, Popis, SpecifikacijaPostavke
 
 def index(request):
     
@@ -19,6 +19,13 @@ class PostavkaListView(generic.ListView):
     #    return Postavka.objects.filter(opis_postavke__icontains='p')
 class PostavkaDetailView(generic.DetailView):
     model = Postavka
+
+class SpecifikacijaListView(generic.ListView):
+    model = SpecifikacijaPostavke
+    def get_queryset(self):
+        return SpecifikacijaPostavke.objects.filter(dela=4)
+class SpecifikacijaDetailView(generic.DetailView):
+    model = SpecifikacijaPostavke
 
 class PopisListView(generic.ListView):
     model = Popis

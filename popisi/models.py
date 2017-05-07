@@ -43,7 +43,7 @@ class Skupina(models.Model):
     splosna_dolocila_skupine = models.TextField(max_length=2000,default="splošna določila skupine ZEMELJSKA DELA ")
     zvrst = models.ForeignKey('Zvrst',on_delete=models.CASCADE)    
      
-    class Meta: 
+    class Meta:  
         ordering = ["koda_skupine"]
     def __str__(self):
         return self.naziv_skupine
@@ -79,8 +79,9 @@ class Postavka(models.Model):
 
 class SpecifikacijaPostavke(models.Model):
     koda_specifikacije = models.CharField(max_length=50,null=True)    
-    vsebina_specifikacije = models.CharField(max_length=100)
+    vsebina_specifikacije = models.CharField(verbose_name='standardna vsebina specifikacije postavke',max_length=100)
     splosna_dolocila_specifikacije = models.TextField(max_length=2000,default="splošna določila specifikacije")
+    info = models.TextField(max_length=2000,default="tehnične informacije")
     dela = models.ManyToManyField(Dela)
     class Meta: 
         ordering = ["koda_specifikacije"]
@@ -88,7 +89,7 @@ class SpecifikacijaPostavke(models.Model):
         return self.vsebina_specifikacije
     
     def get_absolute_url(self):
-        return reverse('specifikacija_postavke-detail', args=[str(self.id)]) 
+        return reverse('specifikacija-detail', args=[str(self.id)]) 
 
 class Objekt(models.Model):
     naziv_objekta = models.CharField(max_length=50,null=True)
@@ -109,7 +110,8 @@ class Popis(models.Model):
     koda_popisne_postavke = models.CharField(max_length=100,null=True)
     zaporedna_stevilka = models.IntegerField(null=True)
     postavka = models.ForeignKey('Postavka')
-    specifikacija = models.ManyToManyField(SpecifikacijaPostavke)     
+    specifikacija = models.ManyToManyField(SpecifikacijaPostavke,verbose_name='standardne specifikacije postavke')     
+    specifikacija_uporabnika = models.TextField(max_length=2000,verbose_name='dodatne specifikacije postavke',null=True )
     objekt = models.ForeignKey('Objekt',on_delete=models.CASCADE, default=x)
     class Meta: 
         ordering = ["zaporedna_stevilka"]
