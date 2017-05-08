@@ -23,7 +23,8 @@ class PostavkaDetailView(generic.DetailView):
 class SpecifikacijaListView(generic.ListView):
     model = SpecifikacijaPostavke
     def get_queryset(self):
-        return SpecifikacijaPostavke.objects.filter(dela=4)
+        #return SpecifikacijaPostavke.objects.filter(dela=5)
+        return SpecifikacijaPostavke.objects.filter(dela__opis_del='VGRAJEVANJE BETONA')
 class SpecifikacijaDetailView(generic.DetailView):
     model = SpecifikacijaPostavke
 
