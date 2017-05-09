@@ -49,12 +49,12 @@ class Skupina(models.Model):
         ordering = ["zaporedna_stevilka_skupine"]
     def __str__(self):
     #    return self.naziv_skupine
-        return '%s, %s, %s' % (self.zaporedna_stevilka_skupine, self.koda_skupine, self.naziv_skupine)
+        return '%s, %s, %s' % (self.zaporedna_stevilka_skupine, self.koda_skupine, self.naziv_skupine) 
     def get_absolute_url(self): 
         return reverse('skupina-detail', args=[str(self.id)]) 
 
 class Dela(models.Model):
-    zaporedna_stevilka_del = models.IntegerField(null=True)
+    zaporedna_stevilka_del = models.IntegerField(null=True) 
     koda_del = models.CharField(max_length=50,null=True)
     opis_del=models.CharField(verbose_name='Opis del',max_length=50)
     splosna_dolocila_del = models.TextField(max_length=2000,default="splošna določila za dela IZKOPI ")
@@ -67,20 +67,6 @@ class Dela(models.Model):
         return '%s, %s, %s' % (self.zaporedna_stevilka_del, self.koda_del, self.opis_del)
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
-
-class Postavka(models.Model): 
-    zaporedna_stevilka_postavke = models.IntegerField(null=True)
-    koda_postavke = models.CharField(max_length=100,null=True)
-    opis_postavke = models.CharField(max_length=100)
-    enota_mere = models.CharField(max_length=10)
-    dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
-    splosna_dolocila_postavke = models.TextField(max_length=1000, default="splošna določila postavke")
-    class Meta: 
-        ordering = ["zaporedna_stevilka_postavke"]
-    def __str__(self):
-        return '%s, %s, %s, %s' % (self.zaporedna_stevilka_postavke,self.koda_postavke,self.opis_postavke, self.enota_mere)
-    def get_absolute_url(self):
-        return reverse('postavka-detail', args=[str(self.id)])    
 
 class SpecifikacijaPostavke(models.Model):
     zaporedna_stevilka_specifikacije = models.IntegerField(null=True)
@@ -96,6 +82,22 @@ class SpecifikacijaPostavke(models.Model):
         return '%s, %s, %s' % (self.zaporedna_stevilka_specifikacije,self.koda_specifikacije,self.vsebina_specifikacije)
     def get_absolute_url(self):
         return reverse('specifikacija-detail', args=[str(self.id)]) 
+
+class Postavka(models.Model): 
+    zaporedna_stevilka_postavke = models.IntegerField(null=True)
+    koda_postavke = models.CharField(max_length=100,null=True)
+    opis_postavke = models.CharField(max_length=100)
+    enota_mere = models.CharField(max_length=10)
+    dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
+    specifikacija = models.ManyToManyField(SpecifikacijaPostavke)
+    splosna_dolocila_postavke = models.TextField(max_length=1000, default="splošna določila postavke")
+    class Meta: 
+        ordering = ["zaporedna_stevilka_postavke"]
+    def __str__(self):
+        return '%s, %s, %s, %s' % (self.zaporedna_stevilka_postavke,self.koda_postavke,self.opis_postavke, self.enota_mere)
+    def get_absolute_url(self):
+        return reverse('postavka-detail', args=[str(self.id)])    
+
 
 class Objekt(models.Model):
     naziv_objekta = models.CharField(max_length=50,null=True)

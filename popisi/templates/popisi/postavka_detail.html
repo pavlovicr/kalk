@@ -10,6 +10,7 @@
   <p><strong>enota mere:</strong> {{ postavka.enota_mere }}</p> 
   
   <p><strong>dela:</strong> {{ postavka.dela }}</p>  
+  <p><strong>Specifikacije :</strong> {% for a in postavka.specifikacija.all %} {{ a.vsebina_specifikacije }}{% endfor %}</p>   
   <p><strong>splošna določila postavke:</strong> {{ postavka.splosna_dolocila_postavke }}</p>
 
   <!--<p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
