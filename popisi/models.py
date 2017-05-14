@@ -123,7 +123,7 @@ class Popis(models.Model):
     specifikacija_uporabnika = models.TextField(max_length=2000,verbose_name='dodatne specifikacije postavke',null=True )
     objekt = models.ForeignKey('Objekt',on_delete=models.CASCADE, default=x)
     class Meta: 
-        ordering = ["zaporedna_stevilka"]
+            ordering = ["zaporedna_stevilka"]
     def __str__(self):
 #        return self.zaporedna_stevilka
         return '%s, %s, %s' % (self.zaporedna_stevilka, self.postavka, self.specifikacija,)
@@ -131,3 +131,4 @@ class Popis(models.Model):
         return reverse('popis-detail', args=[str(self.id)])    
 
 
+################FUNKCIJEFUNKCIJEFUNKCIJE##############################################################################

@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Popis: {{ popis.postavka }}</h1>
 
-  <p><strong>Koda:</strong> <a href="">{{ popis.zaporedna_stevilka }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Koda:</strong> <a href="">{{ popis.koda_popisne_postavke }}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Opis:</strong> {{ popis.postavka }}</p>
   
   <p><strong>Specifikacija popisne postavke:</strong> {% for specifikacija in popis.specifikacija.all %} {{specifikacija.koda_specifikacije}}, {{specifikacija.vsebina_specifikacije}}, {{specifikacija.splosna_dolocila_specifikacije}} {% endfor %} </p>

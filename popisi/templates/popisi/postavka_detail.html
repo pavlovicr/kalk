@@ -13,6 +13,8 @@
   <p><strong>Specifikacije :</strong> {% for a in postavka.specifikacija.all %} {{ a.vsebina_specifikacije }}{% endfor %}</p>   
   <p><strong>splošna določila postavke:</strong> {{ postavka.splosna_dolocila_postavke }}</p>
 
+ 
+
   <!--<p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
   <p><strong>Specifikacija postavke:</strong> {% for specifikacija in postavka.specifikacija.all %} {{specifikacija}} {% endfor %}</p>
   <div style="margin-left:20px;margin-top:20px">

@@ -8,7 +8,7 @@
 
       {% for a in specifikacijapostavke_list %}
       <li>
-        <a href="{{ a.get_absolute_url }}">{{ a.vsebina_specifikacije }}</a> ({{a.dela}})
+        <a href="{{ a.get_absolute_url }}">{{ a.vsebina_specifikacije }}</a> ({{a.dela.all}})
       </li>
       {% endfor %}
 
