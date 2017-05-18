@@ -68,20 +68,39 @@ class Dela(models.Model):
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
 
+class SkupinaSpecifikacije(models.Model):
+    zaporedna_stevilka_skupine_specifikacije = models.IntegerField(null=True) 
+    koda_skupine_specifikacije = models.CharField(max_length=50,null=True)
+    opis_skupine_specifikacije=models.CharField(verbose_name='Opis skupine specifikacije',max_length=50)
+    splosna_dolocila_skupine_specifikacije = models.TextField(max_length=2000,default="splošna določila za skupino specifikacije npr. kategorije zemljišča ")
+    dela = models.ManyToManyField(Dela)
+    
+
+    class Meta: 
+        ordering = ["zaporedna_stevilka_skupine_specifikacije"]
+    def __str__(self):
+        return self.opis_skupine_specifikacije
+        return '%s, %s, %s' % (self.zaporedna_stevilka_skupine_specifikacije, self.koda_skupine_specifikacije, self.opis_skupine_specifikacije)
+    def get_absolute_url(self):
+        return reverse('skupinaspecifikacije-detail', args=[str(self.id)])
+
+
 class SpecifikacijaPostavke(models.Model):
     zaporedna_stevilka_specifikacije = models.IntegerField(null=True)
     koda_specifikacije = models.CharField(max_length=50,null=True)    
     vsebina_specifikacije = models.CharField(verbose_name='standardna vsebina specifikacije postavke',max_length=100)
     splosna_dolocila_specifikacije = models.TextField(max_length=2000,default="splošna določila specifikacije")
     info = models.TextField(max_length=2000,default="tehnične informacije")
-    dela = models.ManyToManyField(Dela)
+    skupinaspecifikacije = models.ForeignKey('SkupinaSpecifikacije',on_delete=models.CASCADE,null=True) 
+    
     class Meta: 
         ordering = ["zaporedna_stevilka_specifikacije"]
     def __str__(self):
         #return self.vsebina_specifikacije
-        return '%s, %s, %s' % (self.zaporedna_stevilka_specifikacije,self.koda_specifikacije,self.vsebina_specifikacije)
+        return '%s, %s, %s' % (self.zaporedna_stevilka_specifikacije,self.koda_specifikacije,self.vsebina_specifikacije) 
     def get_absolute_url(self):
         return reverse('specifikacija-detail', args=[str(self.id)]) 
+
 
 class Postavka(models.Model): 
     zaporedna_stevilka_postavke = models.IntegerField(null=True)

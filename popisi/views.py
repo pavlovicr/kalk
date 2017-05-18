@@ -1,22 +1,30 @@
 from django.shortcuts import render
 from django.views import generic
-from popisi.models import Postavka, Popis, SpecifikacijaPostavke
+from popisi.models import Postavka, Popis, SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacije
 from django.db.models import Count
 
 ##################################################################
 
-from popisi.models import Postavka,Skupina,Dela,SpecifikacijaPostavke,Popis
+
 #exec(open("./popisi/views.py").read())
 
-#def stetje(): 
-#    print('dela')
-#    zap_st = 1
-#    for b in Popis.objects.all():
-#        b.zaporedna_stevilka = zap_st
-#        b.save()
-#        zap_st = zap_st + 1
-#stetje()
+def stetje(): 
+    print('dela')
+    zap_st = 1
+    for b in Popis.objects.all():
+        b.zaporedna_stevilka = zap_st
+        b.save()
+        zap_st = zap_st + 1
+stetje()
 
+def skupaj():
+
+    for a in Popis.objects.all():
+        zdruzeno = '.'.join([a.postavka.koda_postavke]+[str(b.koda_specifikacije) for b in a.specifikacija.all()])
+        a.koda_popisne_postavke=zdruzeno
+        a.save() 
+        print(a.koda_popisne_postavke)
+skupaj()
 
 #def koda_postavke():
 #    for a in Postavka.objects.all():
@@ -24,23 +32,55 @@ from popisi.models import Postavka,Skupina,Dela,SpecifikacijaPostavke,Popis
 #koda_postavke()
 
 
-#deluje vendar da samo zadnjo kodo specifikacije
+#deluje ???
 #def kodapopisa():
-#    for a in Popis.objects.all():
-#        for b in a.specifikacija.all():  
-#            c=(b.koda_specifikacije)
-#            a.koda_popisne_postavke=c
-#            a.save()
+#	c = ""
+#	for a in Popis.objects.all():
+#		for b in a.specifikacija.all():
+#			c+=b.koda_specifikacije
+#	a.koda_popisne_postavke = c
+#	a.save()
 #kodapopisa()
 
 
-def kodapopisa():
-    for a in Popis.objects.all():
-        for b in a.specifikacija.all():  
-            c=(b.koda_specifikacije)
-            a.koda_popisne_postavke=c
-            a.save()
-kodapopisa()
+
+
+
+# ta deluje odlično
+#def list_zdruzevanje():
+#    for a in Popis.objects.all():
+#        zdruzeno = '.'.join([str(b.koda_specifikacije) for b in a.specifikacija.all()])
+#        a.koda_popisne_postavke=zdruzeno
+#        a.save()
+#list_zdruzevanje()
+
+#tudi ta deluje , le da je za postavko
+#def list_zdruzevanje1():
+#    for c in Popis.objects.all():
+#        c.koda_popisne_postavke=c.postavka.koda_postavke
+#        c.save()
+#        print(c.koda_popisne_postavke) 
+#list_zdruzevanje1()
+
+
+
+
+
+
+
+# ta funkcija združuje list  "".join(['miha','el'])  v mihael
+
+
+
+#class ZeroObject(object):
+#    def __add__(self, other):
+#    return other
+
+#>>> sum(["hi", "there"], ZeroObject())
+#'hithere'
+
+
+
 
 
 

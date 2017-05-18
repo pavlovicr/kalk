@@ -18,7 +18,7 @@ return y
 from popisi.models import Postavka,Skupina,Dela,SpecifikacijaPostavke,Popis
 #exec(open("./popisi/utils.py").read())
 
-#def stetje(): 
+def stetje(): 
     print('dela')
     zap_st = 1
     for b in Popis.objects.all():
@@ -26,7 +26,7 @@ from popisi.models import Postavka,Skupina,Dela,SpecifikacijaPostavke,Popis
         b.save()
         zap_st = zap_st + 1
     return('dela') 
-#stetje()
+stetje()
 
 
 #def koda_postavke():
