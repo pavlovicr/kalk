@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from popisi.models import Postavka, Popis, SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacije
+from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacije,PopisnaPostavka
 from django.db.models import Count
 
 ##################################################################
@@ -11,15 +11,15 @@ from django.db.models import Count
 def stetje(): 
     print('dela')
     zap_st = 1
-    for b in Popis.objects.all():
+    for b in PopisnaPostavka.objects.all():
         b.zaporedna_stevilka = zap_st
         b.save()
         zap_st = zap_st + 1
 stetje()
 
 def skupaj():
-
-    for a in Popis.objects.all():
+    from popisi.models import PopisnaPostavka
+    for a in PopisnaPostavka.objects.all():
         zdruzeno = '.'.join([a.postavka.koda_postavke]+[str(b.koda_specifikacije) for b in a.specifikacija.all()])
         a.koda_popisne_postavke=zdruzeno
         a.save() 
@@ -120,14 +120,14 @@ class SpecifikacijaListView(generic.ListView):
 class SpecifikacijaDetailView(generic.DetailView):
     model = SpecifikacijaPostavke
 
-class PopisListView(generic.ListView):
+class PopisnaPostavkaListView(generic.ListView):
    
-    model = Popis
+    model = PopisnaPostavka
    # def get_queryset(self):
     #    return Postavka.objects.filter(opis_postavke__icontains='p')
     #stetje()
-class PopisDetailView(generic.DetailView):
-    model = Popis    
+class PopisnaPostavkaDetailView(generic.DetailView):
+    model = PopisnaPostavka    
 
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 

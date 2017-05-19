@@ -1,12 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Popisi seznam</h1>
+    <h1>Popisne postavke seznam</h1>
 
-    {% if popis_list %}
+    {% if popisnapostavka_list %}
     <ul>
 
-      {% for b in popis_list %}
+      {% for b in popisnapostavka_list %}
       <li>
         <a href="{{ b.get_absolute_url }}">{{ b.postavka }}</a> {{b.zaporedna_stevilka}},----------{{b.koda_popisne_postavke}},------({% for a in b.specifikacija.all %} , {{a.koda_specifikacije}} {{a.vsebina_specifikacije}} {% endfor %}), {{b.specifikacija_uporabnika}}
       </li>

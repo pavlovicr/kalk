@@ -118,11 +118,11 @@ class Postavka(models.Model):
         return reverse('postavka-detail', args=[str(self.id)])    
 
 
-class Objekt(models.Model):
+class Popis(models.Model):
     naziv_objekta = models.CharField(max_length=50,null=True)
-    neto_povrsina_objekta=models.DecimalField(max_digits=20,decimal_places=2,default=('0.00'))
-    bruto_povrsina_objekta=models.DecimalField(max_digits=20,decimal_places=2,default=('0.00'))
+    naziv_objekta = models.CharField(max_length=50,null=True)
     opis_objekta = models.TextField(max_length=2000,default="opis objekta ")
+    neto_povrsina_objekta=models.DecimalField(max_digits=20,decimal_places=2,default=('0.00'))
     podrocje = models.ForeignKey('Podrocje',on_delete=models.CASCADE,default=1)
     projekt = models.ForeignKey('Projekt',on_delete=models.CASCADE)
     class Meta: 
@@ -132,22 +132,19 @@ class Objekt(models.Model):
     def get_absolute_url(self):
         return reverse('objekt-detail', args=[str(self.id)]) 
 
-x=1
-
-class Popis(models.Model):
-    koda_popisne_postavke = models.CharField(max_length=100,null=True)
-    zaporedna_stevilka = models.IntegerField(null=True)
+class PopisnaPostavka(models.Model): 
+    koda_popisne_postavke= models.CharField(max_length=100,null=True)
+    zaporedna_stevilka_popisne_postavke = models.IntegerField(null=True)
     postavka = models.ForeignKey('Postavka')
     specifikacija = models.ManyToManyField(SpecifikacijaPostavke,verbose_name='standardne specifikacije postavke')     
     specifikacija_uporabnika = models.TextField(max_length=2000,verbose_name='dodatne specifikacije postavke',null=True )
-    objekt = models.ForeignKey('Objekt',on_delete=models.CASCADE, default=x)
+    popis = models.ForeignKey('Popis',on_delete=models.CASCADE, default=1)
     class Meta: 
-            ordering = ["zaporedna_stevilka"]
+        ordering = ["zaporedna_stevilka_popisne_postavke"]
     def __str__(self):
-#        return self.zaporedna_stevilka
-        return '%s, %s, %s' % (self.zaporedna_stevilka, self.postavka, self.specifikacija,)
+        return '%s, %s, %s' % (self.zaporedna_stevilka_popisne_postavke, self.postavka, self.specifikacija,)
     def get_absolute_url(self):
-        return reverse('popis-detail', args=[str(self.id)])    
+        return reverse('popisna_postavka-detail', args=[str(self.id)])    
 
 
 ################FUNKCIJEFUNKCIJEFUNKCIJE##############################################################################

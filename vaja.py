@@ -15,13 +15,13 @@ return y
 
 
 #default=kodapopisa()
-from popisi.models import Postavka,Skupina,Dela,SpecifikacijaPostavke,Popis
+from popisi.models import Postavka,Skupina,Dela,SpecifikacijaPostavke
 #exec(open("./popisi/utils.py").read())
 
 def stetje(): 
     print('dela')
     zap_st = 1
-    for b in Popis.objects.all():
+    for b in PopisnaPostavka.objects.all():
         b.zaporedna_stevilka = zap_st
         b.save()
         zap_st = zap_st + 1
