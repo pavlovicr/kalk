@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacije,PopisnaPostavka
+from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacijePostavke,PopisnaPostavka
 from django.db.models import Count
 
 ##################################################################
@@ -12,7 +12,7 @@ def stetje():
     print('dela')
     zap_st = 1
     for b in PopisnaPostavka.objects.all():
-        b.zaporedna_stevilka = zap_st
+        b.zaporedna_stevilka_popisne_postavke = zap_st
         b.save()
         zap_st = zap_st + 1
 stetje()

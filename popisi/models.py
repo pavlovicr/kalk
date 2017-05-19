@@ -68,7 +68,7 @@ class Dela(models.Model):
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
 
-class SkupinaSpecifikacije(models.Model):
+class SkupinaSpecifikacijePostavke(models.Model):
     zaporedna_stevilka_skupine_specifikacije = models.IntegerField(null=True) 
     koda_skupine_specifikacije = models.CharField(max_length=50,null=True)
     opis_skupine_specifikacije=models.CharField(verbose_name='Opis skupine specifikacije',max_length=50)
@@ -91,7 +91,7 @@ class SpecifikacijaPostavke(models.Model):
     vsebina_specifikacije = models.CharField(verbose_name='standardna vsebina specifikacije postavke',max_length=100)
     splosna_dolocila_specifikacije = models.TextField(max_length=2000,default="splošna določila specifikacije")
     info = models.TextField(max_length=2000,default="tehnične informacije")
-    skupinaspecifikacije = models.ForeignKey('SkupinaSpecifikacije',on_delete=models.CASCADE,null=True) 
+    skupinaspecifikacije = models.ForeignKey('SkupinaSpecifikacijePostavke',on_delete=models.CASCADE,null=True) 
     
     class Meta: 
         ordering = ["zaporedna_stevilka_specifikacije"]
