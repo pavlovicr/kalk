@@ -9,7 +9,7 @@
   
   <p><strong>splošna določila specifikacije:</strong> {{ specifikacijapostavke.splosna_dolocila_specifikacije_postavke }}</p> 
   
-  <p><strong>dela:</strong> {% for a in specifikacijapostavke.dela.all %} {{a.opis_del}} {% endfor %}</p>  
+  <p><strong>dela:</strong> {% for a in specifikacijapostavke.skupinaspecifikacije.all %} {{a.opis_skupine_specifikacije}} {% endfor %}</p>  
   
   <!--<p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
   <p><strong>Specifikacija postavke:</strong> {% for specifikacija in postavka.specifikacija.all %} {{specifikacija}} {% endfor %}</p>

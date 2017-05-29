@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacijePostavke,PopisnaPostavka
+from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacijePostavke,PopisnaPostavka,Popis
 from django.db.models import Count
 
 ##################################################################
@@ -18,7 +18,7 @@ def stetje():
 stetje()
 
 def skupaj():
-    from popisi.models import PopisnaPostavka
+    
     for a in PopisnaPostavka.objects.all():
         zdruzeno = '.'.join([a.postavka.koda_postavke]+[str(b.koda_specifikacije) for b in a.specifikacija.all()])
         a.koda_popisne_postavke=zdruzeno
@@ -87,8 +87,25 @@ skupaj()
 
 #############################################################
 
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
+from .forms import PopisnaPostavkaForm
 
+def popisna_postavka_nova(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = PopisnaPostavkaForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid(): 
+            form.save()# process the data in form.cleaned_data as required 
+            # ... 
+            # redirect to a new URL: 
+            return HttpResponseRedirect('/popisi/popisne_postavke/')
+    # if a GET (or any other method) we'll create a blank form 
+    else: form = PopisnaPostavkaForm()
+    return render(request, 'popisi/popisna_postavka_nova.html', {'form': form})
 
 
 
@@ -96,8 +113,8 @@ skupaj()
 def index(request):
     
     stej_postavke=Postavka.objects.all().count()
-    stej_popisne_postavke=Popis.objects.all().count()
-    q = Popis.objects.annotate(Count('postavka'))
+    stej_popisne_postavke=PopisnaPostavka.objects.all().count()
+    q = PopisnaPostavka.objects.annotate(Count('postavka'))
 
     return render(
         request,
@@ -114,9 +131,10 @@ class PostavkaDetailView(generic.DetailView):
 
 class SpecifikacijaListView(generic.ListView):
     model = SpecifikacijaPostavke
-    def get_queryset(self):
-        #return SpecifikacijaPostavke.objects.filter(dela=5)
-        return SpecifikacijaPostavke.objects.filter(dela__opis_del='VGRAJEVANJE BETONA')
+#    def get_queryset(self):
+ 
+#        return SpecifikacijaPostavke.objects.filter(skupinaspecifikacije__opis_skupine_specifikacije='odpornost proti obrabi površine')
+
 class SpecifikacijaDetailView(generic.DetailView):
     model = SpecifikacijaPostavke
 
@@ -128,6 +146,15 @@ class PopisnaPostavkaListView(generic.ListView):
     #stetje()
 class PopisnaPostavkaDetailView(generic.DetailView):
     model = PopisnaPostavka    
+
+class PopisListView(generic.ListView):
+   
+    model = Popis
+   # def get_queryset(self):
+    #    return Postavka.objects.filter(opis_postavke__icontains='p')
+    #stetje()
+class PopisDetailView(generic.DetailView):
+    model = Popis
 
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 

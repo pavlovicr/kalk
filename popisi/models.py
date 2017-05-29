@@ -108,7 +108,7 @@ class Postavka(models.Model):
     opis_postavke = models.CharField(max_length=100)
     enota_mere = models.CharField(max_length=10)
     dela = models.ForeignKey('Dela', on_delete=models.SET_NULL, null=True)
-    specifikacija = models.ManyToManyField(SpecifikacijaPostavke)
+    skupina_specifikacije_postavke = models.ManyToManyField(SkupinaSpecifikacijePostavke)
     splosna_dolocila_postavke = models.TextField(max_length=1000, default="splošna določila postavke")
     class Meta: 
         ordering = ["zaporedna_stevilka_postavke"]
@@ -119,7 +119,7 @@ class Postavka(models.Model):
 
 
 class Popis(models.Model):
-    naziv_objekta = models.CharField(max_length=50,null=True)
+    naslov_popisa = models.CharField(max_length=50,null=True)
     naziv_objekta = models.CharField(max_length=50,null=True)
     opis_objekta = models.TextField(max_length=2000,default="opis objekta ")
     neto_povrsina_objekta=models.DecimalField(max_digits=20,decimal_places=2,default=('0.00'))
@@ -130,7 +130,7 @@ class Popis(models.Model):
     def __str__(self):
         return self.naziv_objekta
     def get_absolute_url(self):
-        return reverse('objekt-detail', args=[str(self.id)]) 
+        return reverse('popis-detail', args=[str(self.id)]) 
 
 class PopisnaPostavka(models.Model): 
     koda_popisne_postavke= models.CharField(max_length=100,null=True)
@@ -142,7 +142,7 @@ class PopisnaPostavka(models.Model):
     class Meta: 
         ordering = ["zaporedna_stevilka_popisne_postavke"]
     def __str__(self):
-        return '%s, %s, %s' % (self.zaporedna_stevilka_popisne_postavke, self.postavka, self.specifikacija,)
+        return '%s, %s, %s' % (self.zaporedna_stevilka_popisne_postavke, self.koda_popisne_postavke, self.specifikacija,)
     def get_absolute_url(self):
         return reverse('popisna_postavka-detail', args=[str(self.id)])    
 
