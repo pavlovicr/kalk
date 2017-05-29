@@ -1,5 +1,16 @@
 {% extends "base_generic.html" %}
 
+<STYLE>
+p.test{
+      width:25em;
+      border:1px solid #000000;
+      word-wrap:break-word;
+}     
+
+</STYLE>
+
+
+
 {% block content %}
   
   <h1>Popis: {{ popis.naslov_popisa }}</h1>
@@ -7,22 +18,24 @@
   <p><strong>Naslov popisa:</strong> <a href="">{{ popis.naslov_popisa }}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Naziv objekta:</strong> {{ popis.naziv_objekta }}</p>
   
-  <p><strong>Popisne postavke:</strong> {% for a in popis.popisnapostavka_set.all %} <p>{{a.zaporedna_stevilka_popisne_postavke}}.
-  {{a.koda_popisne_postavke}} </p> 
-  <p>{{a.postavka.opis_postavke}} {% for b in a.specifikacija.all %} {{b.vsebina_specifikacije}} {% endfor %}</p>
-  
+  <p><strong>Popisne postavke:</strong> </p>
+  {% for a in popis.popisnapostavka_set.all %}
+  <p>{{a.zaporedna_stevilka_popisne_postavke}}.{{a.koda_popisne_postavke}} </p> 
+<div>
+   <p class ='test'>{{a.postavka.opis_postavke}} {% for b in a.specifikacija.all %} {{b.vsebina_specifikacije}} {% endfor %}</p>
+</div>
 
+   <p>{{a.specifikacija_uporabnika}}
+  
 
 
 
   {% endfor %} 
 
+{% endblock %}
 
 
-
-  <p><strong>Dodatna specifikacija:</strong> {{ popisnapostavka.specifikacija_uporabnika }}</p>
-
-
+  
   <!--<p><strong>enota mere:</strong> {{ popis.enota_mere }}</p>  
   
   <p><strong>dela:</strong> {{ postavka.dela }}</p>  
@@ -42,6 +55,3 @@
     <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
     {% endfor %}
   </div>  -->
-
-{% endblock %}
-

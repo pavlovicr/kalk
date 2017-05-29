@@ -29,6 +29,9 @@ p.test{
        
         {% for a in b.specifikacija.all %} , {{a.vsebina_specifikacije}} {% endfor %}, {{b.specifikacija_uporabnika}}</p>
       </div>
+      <p> {{b.postavka.enota_mere}}</p>
+
+
       </li>
       {% endfor %}
 
