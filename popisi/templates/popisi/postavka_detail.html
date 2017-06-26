@@ -10,7 +10,19 @@
   <p><strong>enota mere:</strong> {{ postavka.enota_mere }}</p> 
   
   <p><strong>dela:</strong> {{ postavka.dela }}</p>  
-  <p><strong>Specifikacije :</strong> {% for a in postavka.specifikacija.all %} {{ a.vsebina_specifikacije }}{% endfor %}</p>   
+  
+
+
+  <p><strong>Specifikacije :</strong> <br>
+  {% for a in postavka.dela.skupinaspecifikacijepostavke_set.all %}
+  <b>{{ a.opis_skupine_specifikacije }}</b><br>
+   {% for b in a.specifikacijapostavke_set.all %}
+    - {{ b.vsebina_specifikacije }}<br>
+    {% endfor %}
+  {% endfor %}</p>   
+  
+
+
   <p><strong>splošna določila postavke:</strong> {{ postavka.splosna_dolocila_postavke }}</p>
 
  

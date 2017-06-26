@@ -9,7 +9,32 @@ def stetje():
         b.save()
         zap_st = zap_st + 1
     return('dela') 
+
+class Vaja(object):
+    def __init__(self,x,y):
+        self.x=x
+        self.y=y
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #stetje()
+
+
+
+
+
 
 
 #def koda_postavke():

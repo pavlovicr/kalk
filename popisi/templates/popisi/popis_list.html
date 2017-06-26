@@ -10,7 +10,7 @@
 
       {% for b in popis_list %}
       <li>
-        <a href="{{ b.get_absolute_url }}">{{ b.naslov_popisa}}, {{b.naziv_objekta}},</a> 
+        <a href="{{ b.get_absolute_url }}">{{ b.projekt.naziv_projekta}},   {{b.naziv_objekta}},</a> 
                      
       </li>
       {% endfor %}

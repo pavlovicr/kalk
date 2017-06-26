@@ -1,57 +1,57 @@
+
+
+
 {% extends "base_generic.html" %}
-
-<STYLE>
-p.test{
-      width:25em;
-      border:1px solid #000000;
-      word-wrap:break-word;
-}     
-
-</STYLE>
-
 
 
 {% block content %}
-  
-  <h1>Popis: {{ popis.naslov_popisa }}</h1>
 
-  <p><strong>Naslov popisa:</strong> <a href="">{{ popis.naslov_popisa }}</a></p> <!-- author detail link not yet defined -->
-  <p><strong>Naziv objekta:</strong> {{ popis.naziv_objekta }}</p>
+<STYLE>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</STYLE>
+
+
+<div style="background-color:black;color:white;padding:20px;">    
+
+<!--{% for a in popis.popisnapostavka_set.all %}{{a.postavka.dela.skupinaspecifikacijepostavke_set.all}}{% endfor %}-->
+
+{{a.postavka.dela.skupinaspecifikacijepostavke_set.all}}
+
+
+
+
   
-  <p><strong>Popisne postavke:</strong> </p>
+  <p><strong>Projekt:</strong> <a href="">{{ popis.projekt.naziv_projekta }}</a></p>
+  <p title="To je komentar za ta stavek "><strong>Objekt:</strong> {{ popis.naziv_objekta }}</p>
+</div>  
+  <table class="table table-bordered">
+  <table class="table table-striped">
+
+  <tr style="background-color:red;">
+    <td>poz.</td>
+    <td>šifra/opis postavke</td>
+    <td>em</td>
+    <td>količina</td>
+    <td>cena/em</td>
+    <td>skupaj</td>
+  </tr>
+
   {% for a in popis.popisnapostavka_set.all %}
-  <p>{{a.zaporedna_stevilka_popisne_postavke}}.{{a.koda_popisne_postavke}} </p> 
-<div>
-   <p class ='test'>{{a.postavka.opis_postavke}} {% for b in a.specifikacija.all %} {{b.vsebina_specifikacije}} {% endfor %}</p>
-</div>
-
-   <p>{{a.specifikacija_uporabnika}}
+  <tr>
+    <td style ="font-size:100%;width:4%;"">{{a.zaporedna_stevilka_popisne_postavke}}</td>
+    <td style="font-size:100%;width:40%;"><a href="{{ a.get_absolute_url }}">{{a.koda_popisne_postavke}}</a>
+    <p style="font-size:100%;width:80%;background-color:#e0ebeb;">{{a.postavka.opis_postavke}} {% for b in a.specifikacija.all %} {{b.vsebina_specifikacije}} {% endfor %}{{a.specifikacija_uporabnika}}</p></td>
+    <td style="font-size:100%;width:5%;background-color:#e0ebeb;">{{a.postavka.enota_mere}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
   
-
-
-
   {% endfor %} 
+  </table>
 
 {% endblock %}
 
-
-  
-  <!--<p><strong>enota mere:</strong> {{ popis.enota_mere }}</p>  
-  
-  <p><strong>dela:</strong> {{ postavka.dela }}</p>  
-  <p><strong>splošna določila postavke
-  :</strong> {{ postavka.splosna_dolocila_postavke }}</p>
-
-  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Copies</h4>
-
-    {% for copy in book.bookinstance_set.all %}
-    <hr>
-    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-    {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
-    <p><strong>Imprint:</strong> {{copy.imprint}}</p>
-    <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
-    {% endfor %}
-  </div>  -->

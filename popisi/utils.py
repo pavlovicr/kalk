@@ -11,6 +11,14 @@ def stetje():
         b.save()
         zap_st = zap_st + 1
     return('dela') 
+
+class Vaja(object):
+	def __init__(self,a,b):
+		self.x=a
+		self.y=b
+
+
+
 #stetje()
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Projekt,Popis,Dela,Skupina,Zvrst,Postavka,SpecifikacijaPostavke,Podrocje,SkupinaSpecifikacijePostavke,PopisnaPostavka
+from .models import Projekt,Popis,Dela,Skupina,Zvrst,Postavka,SpecifikacijaPostavke,Podrocje,SkupinaSpecifikacijePostavke,PopisnaPostavka,Ime
 
 
 
@@ -52,6 +52,7 @@ admin.site.register(Postavka)
 admin.site.register(PopisnaPostavka,PopisnaPostavkaAdmin)
 #admin.site.register(SpecifikacijaPostavke)
 #admin.site.register(SkupinaSpecifikacijePostavke)
-
+admin.site.register(Ime)
+    
 
 

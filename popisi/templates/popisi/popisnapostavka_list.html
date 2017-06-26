@@ -15,9 +15,73 @@ p.test{
 </STYLE>
 
 
+{% if popisnapostavka_list %}
+
+<div class="col-lg-6">
+<table class="table table-bordered">
+
+<thead>
+<tr>
+  <th>Zap.st</th>
+  <th>Oznaka</th>
+  <th>Opis</th>
+  <th>Specifikacija uporabnika</th>
+</tr>
+</thead>
+
+<tbody>
+{% for b in popisnapostavka_list %}
+<tr class="danger">
+  <td>{{ b.zaporedna_stevilka_popisne_postavke}}</td>
+  <td><a href="{{ b.get_absolute_url }}">{{b.koda_popisne_postavke}}</a></td>
+  <td>{{ b.postavka.opis_postavke }}</td>
+  <td>{{b.specifikacija_uporabnika}}</td>
+
+</tr>
+{% endfor %}
+
+</tbody>
 
 
-    {% if popisnapostavka_list %}
+</table>
+
+</div>
+
+<div class="col-lg-6">
+<table class="table table-bordered">
+
+<thead>
+<tr>
+  <th>Zap.st</th>
+  <th>Oznaka</th>
+  <th>Opis</th>
+  <th>Specifikacija uporabnika</th>
+</tr>
+</thead>
+
+<tbody>
+{% for b in popisnapostavka_list %}
+<tr class="danger">
+  <td>{{ b.zaporedna_stevilka_popisne_postavke}}</td>
+  <td><a href="{{ b.get_absolute_url }}">{{b.koda_popisne_postavke}}</a></td>
+  <td>{{ b.postavka.opis_postavke }}</td>
+  <td>{{b.specifikacija_uporabnika}}</td>
+
+</tr>
+{% endfor %}
+
+</tbody>
+
+
+</table>
+
+</div>
+
+
+
+    {% endif %}
+
+<!--     {% if popisnapostavka_list %}
     <ul>
 
       {% for b in popisnapostavka_list %}
@@ -38,5 +102,5 @@ p.test{
     </ul>
     {% else %}
       <p>Na žalost , nii popisa.</p>
-    {% endif %}       
+    {% endif %} -->       
 {% endblock %}

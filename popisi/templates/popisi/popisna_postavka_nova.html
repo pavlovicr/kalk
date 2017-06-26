@@ -2,10 +2,32 @@
 {% extends 'base_generic.html' %}
 
 
+
+
+
 {% block content %}
+
+
 <form action="" method="post">
-    {% csrf_token %} 
-    {{ form }}
-    <input type="submit" value="Potrdi" />
+    {% csrf_token %}
+    {{ form.koda_popisne_postavke }}
+    {{ form.zaporedna_stevilka_popisne_postavke }}
+    {{ form.postavka }}
+    
+    {% for a in form.postavka %}{{a.skupina_specifikacije_postavke}}{% endfor %}
+    
+    {{ form.specifikacija_uporabnika }}
+    {{ form.popis }}
+
+    {{ form.specifikacija }}
+
+
+
+    <input type="submit" value="Submit" />
 </form>
+
+
+
+
+
 {% endblock %}

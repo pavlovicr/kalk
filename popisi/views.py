@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacijePostavke,PopisnaPostavka,Popis
+from popisi.models import Postavka,SpecifikacijaPostavke,Dela,Skupina,SkupinaSpecifikacijePostavke,PopisnaPostavka,Popis,SpecifikacijaManager
 from django.db.models import Count
 
 ##################################################################
@@ -25,6 +25,19 @@ def skupaj():
         a.save() 
         print(a.koda_popisne_postavke)
 skupaj()
+
+
+def popisnapostavka():
+    for a in Postavka.objects.all():
+        print(a.skupina_specifikacije_postavke)
+popisnapostavka()
+
+
+
+
+
+
+
 
 #def koda_postavke():
 #    for a in Postavka.objects.all():
@@ -87,8 +100,67 @@ skupaj()
 
 #############################################################
 
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from popisi.models import Ime
+from .forms import ImeForm
+
+def im(request):
+    
+    if request.method == 'POST':
+
+        form=ImeForm(request.POST)
+        return HttpResponse('<tr><th><label for="id_tvoje_ime">Tvoje ime:</label></th><td><input type="text" name="tvoje_ime" maxlength="200" required id="id_tvoje_ime" /></td></tr>'
+)
+
+#    else:
+#        form = ImeForm()
+#    return render(request,'popisi/ime.html',{'form':form})
+def get_ime(request):
+
+    if request.method == 'POST':
+        form = ImeForm(request.POST) 
+       
+
+        if form.is_valid():
+            #form.save()
+            #print (request.COOKIES)
+            #print (request.GET.lists())
+            #print (request.body)
+            a=request.POST['tvoje_ime']
+            print(a)
+            
+            
+            
+            b=Postavka.objects.get(koda_postavke=a)
+            for b in b.skupina_specifikacije_postavke.all():
+
+                print(b.specifikacijapostavke_set
+                     .all())
+
+
+
+
+
+            #b=Ime.objects.get(tvoje_ime=a)
+            #print(b)
+
+            
+
+            #print (request.GET.get('tvoje_ime'))
+            #print (request.path_info)
+            #print (request.encoding)
+            #print (request.content_type)
+            return HttpResponse('sonček je  ')
+    else:
+        form = ImeForm()
+        print(form)
+    return render(request, 'popisi/ime.html', {'form': form})
+    
+
+
+
+
 
 from .forms import PopisnaPostavkaForm
 
@@ -102,10 +174,35 @@ def popisna_postavka_nova(request):
             form.save()# process the data in form.cleaned_data as required 
             # ... 
             # redirect to a new URL: 
+
             return HttpResponseRedirect('/popisi/popisne_postavke/')
     # if a GET (or any other method) we'll create a blank form 
     else: form = PopisnaPostavkaForm()
     return render(request, 'popisi/popisna_postavka_nova.html', {'form': form})
+
+
+
+
+
+from django.http import HttpResponse
+
+def vaja(request):
+    a=request.path
+    return HttpResponse(a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

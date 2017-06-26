@@ -16,7 +16,13 @@ urlpatterns = [
     
 
 
-    url(r'^popisna_postavka/nova/$', views.popisna_postavka_nova, name='popisna_postavka-nova'),
+    url(r'^ime/$', views.get_ime, name='ime'),
 
+    url(r'^im/$', views.im, name='im'),
+    
+    url(r'^vaja/$', views.vaja, name='vaja'),
+    
+    url(r'^popisna_postavka/nova/$', views.popisna_postavka_nova, name='popisna_postavka-nova'),
+    
 ]
 

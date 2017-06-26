@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
+    
+
 class Projekt(models.Model):
     naziv_projekta = models.CharField(max_length=200, default ="naziv projekta",null=True)
     opis_projekta = models.TextField(max_length=2000,default="opis projekta ")
@@ -68,6 +71,7 @@ class Dela(models.Model):
     def get_absolute_url(self):
         return reverse('dela-detail', args=[str(self.id)]) 
 
+
 class SkupinaSpecifikacijePostavke(models.Model):
     zaporedna_stevilka_skupine_specifikacije = models.IntegerField(null=True) 
     koda_skupine_specifikacije = models.CharField(max_length=50,null=True)
@@ -84,6 +88,10 @@ class SkupinaSpecifikacijePostavke(models.Model):
     def get_absolute_url(self):
         return reverse('skupinaspecifikacije-detail', args=[str(self.id)])
 
+# primer Managerja
+class SpecifikacijaManager(models.Manager):
+    def get_queryset(self):
+        return super(SpecifikacijaManager, self).get_queryset().filter(skupinaspecifikacije=1)
 
 class SpecifikacijaPostavke(models.Model):
     zaporedna_stevilka_specifikacije = models.IntegerField(null=True)
@@ -93,11 +101,17 @@ class SpecifikacijaPostavke(models.Model):
     info = models.TextField(max_length=2000,default="tehnične informacije")
     skupinaspecifikacije = models.ForeignKey('SkupinaSpecifikacijePostavke',on_delete=models.CASCADE,null=True) 
     
+
+    objects = models.Manager() # The default manager.
+    specifikacija_objects = SpecifikacijaManager() # The Dahl-specific manager.
+
+
     class Meta: 
         ordering = ["zaporedna_stevilka_specifikacije"]
     def __str__(self):
         #return self.vsebina_specifikacije
-        return '%s, %s, %s' % (self.zaporedna_stevilka_specifikacije,self.koda_specifikacije,self.vsebina_specifikacije) 
+        return ' %s, %s' % (self.koda_specifikacije,self.vsebina_specifikacije) 
+    #    return self.vsebina_specifikacije
     def get_absolute_url(self):
         return reverse('specifikacija-detail', args=[str(self.id)]) 
 
@@ -145,6 +159,17 @@ class PopisnaPostavka(models.Model):
         return '%s, %s, %s' % (self.zaporedna_stevilka_popisne_postavke, self.koda_popisne_postavke, self.specifikacija,)
     def get_absolute_url(self):
         return reverse('popisna_postavka-detail', args=[str(self.id)])    
+
+
+
+
+class Ime(models.Model):
+    tvoje_ime = models.CharField(max_length=200)
+    postavka = models.ManyToManyField(Postavka)     
+    #specifikacija = models.ManyToManyField(Postavka)     
+
+    def __str__(self):
+        return self.tvoje_ime
 
 
 ################FUNKCIJEFUNKCIJEFUNKCIJE##############################################################################
