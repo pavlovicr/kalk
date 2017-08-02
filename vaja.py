@@ -5,7 +5,7 @@ def hec():
     if the_world_is_flat: print("vaja dela mojstra")
     else :print("pazi, da te ne pregazi")
 hec()     
-
+#bbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 def koda():
 	for a in Postavka.object.all():
 	    a.koda_postavke
